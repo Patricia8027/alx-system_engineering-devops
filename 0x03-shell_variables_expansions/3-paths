@@ -1,2 +1,2 @@
 #!/bin/bash
-echo &PATH | tr -s ':' '\n' | :wqwc -1
+echo $((' echo $PATH | grep -o ":/" | wc -1'+1))

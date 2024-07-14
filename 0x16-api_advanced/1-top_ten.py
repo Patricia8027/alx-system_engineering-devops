@@ -1,33 +1,29 @@
 #!/usr/bin/python3
-
-import requests
-
 def top_ten(subreddit):
-    """
-    Queries the Reddit API to get the titles of the first 10 hot posts for a given subreddit.
-    
-    Args:
-        subreddit (str): The name of the subreddit to get the hot posts for.
-    """
     try:
-        # Set a custom User-Agent to avoid rate limiting
-        headers = {'User-Agent': 'my-reddit-app/1.0'}
+        # Construct the API URL for the given subreddit
+        url = f"https://www.reddit.com/r/{subreddit}/hot.json?limit=10"
         
-        # Query the Reddit API for the subreddit hot posts
-        response = requests.get(f'https://www.reddit.com/r/{subreddit}/hot.json?limit=10', headers=headers, allow_redirects=False)
+        # Set the headers to include the 'User-Agent' header
+        headers = {'User-Agent': 'my-app/0.0.1'}
         
-        # Check if the request was successful
+        # Make the GET request to the API
+        response = requests.get(url, headers=headers, allow_redirects=False)
+        
+        # Check if the request was successful (status code 200)
         if response.status_code == 200:
-            # Extract the post titles from the response JSON
+            # Get the JSON data from the response
             data = response.json()
-            for post in data['data']['children']:
-                print(post['data']['title'])
-        else:
-            # Print None if the subreddit is invalid
+            
+            # Extract the titles of the first 10 hot posts
+            titles = [post['data']['title'] for post in data['data']['children']]
+            
+            # Print the titles
+            for title in titles:
+                print(title)
+        # Check if the request was redirected (status code 30x)
+        elif 300 <= response.status_code < 400:
+            # If redirected, print None
             print(None)
-    except:
-        # Print None if any errors occur
-        print(None)
-
 
 

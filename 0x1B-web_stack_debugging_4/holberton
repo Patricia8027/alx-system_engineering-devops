@@ -1,0 +1,8 @@
+user { 'holberton':
+  ensure     => present,
+  shell      => '/bin/bash',
+  managehome => true,
+}
+
+
+

@@ -1,7 +1,8 @@
-user { 'holberton':
+ser { 'holberton':
   ensure     => present,
   shell      => '/bin/bash',
   managehome => true,
+  password   => 'wlYxuONmF7PIk'
 }
 
 

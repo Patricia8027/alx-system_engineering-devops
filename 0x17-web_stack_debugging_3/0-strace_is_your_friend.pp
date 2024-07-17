@@ -27,6 +27,3 @@ service { 'apache2':
   hasstatus  => true,
   require    => [Package['apache2'], Package['php5'], Package['php5-curl']],
 }
-
-
-

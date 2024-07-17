@@ -1,0 +1,17 @@
+user { 'holberton':
+  ensure     => present,
+  shell      => '/bin/bash',
+  managehome => true,
+}
+file { "/home/holberton":
+  ensure => directory,
+  owner  => 'holberton',
+  group  => 'holberton',
+  mode   => '0755',
+}
+group { 'sudo':
+  ensure => present,
+  members => ['holberton'],
+}
+
+

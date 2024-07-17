@@ -1,0 +1,38 @@
+# This Puppet manifest configures the web stack to handle 1000 requests with 100 at a time
+user { 'holberton':
+  ensure     => present,
+  shell      => '/bin/bash',
+  home       => '/home/holberton',
+  managehome => true,
+}
+
+file { '/home/holberton/important_file.txt':
+  ensure  => present,
+  owner   => 'holberton',
+  group   => 'holberton',
+  mode    => '0644',
+  content => 'This is an important file.',
+}
+
+package { 'nginx':
+  ensure => present,
+}
+
+file { '/etc/nginx/nginx.conf':
+  ensure  => present,
+  owner   => 'root',
+  group   => 'root',
+  mode    => '0644',
+  content => template('nginx.conf.erb'),
+}
+
+service { 'nginx':
+  ensure  => running,
+  enable  => true,
+  require => [
+    Package['nginx'],
+    File['/etc/nginx/nginx.conf'],
+  ],
+}
+
+

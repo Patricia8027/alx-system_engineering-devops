@@ -59,6 +59,3 @@ def recurse(subreddit, hot_list=[], after="", count=0):
 
     # Return the final list of hot post titles
     return hot_list
-
-
-
